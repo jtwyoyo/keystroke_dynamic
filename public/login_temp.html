@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Key Stroke Dynamic</title>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'><link rel="stylesheet" href="./style.css">
+  <script src="./script.js"></script>
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="login-form">
+  <form id="login-form" action="/login" method="POST">
+    <h1>Login</h1>
+    <div class="content">
+      <div class="input-field">
+        <input type="text" id="username" placeholder="Username" autocomplete="nope">
+      </div>
+      <div class="input-field">
+        <input type="password" id="password" placeholder="Password" autocomplete="new-password">
+      </div>
+    </div>
+    <div class="action">
+      <button id="register-button">Register</button>
+      <button type="submit" name="submit-button">Sign in</button>
+    </div>
+  </form>
+</div>
+
+<div id="login-status"></div>
+</body>
+</html>

@@ -25,15 +25,16 @@ connection.connect((error) => {
 // use body-parser middleware to parse JSON data in POST requests
 app.use(bodyParser.json());
 
-// handle POST requests to /login
+// handle PUT requests to /register
 app.post('/login', (req, res) => {
   // get the username and password from the request body
-  const { username, password } = req.body;
+  const data = req.body;
+  console.log(data)
 
   // query the database for the user with the given username and password
-  const sql = 'SELECT * FROM user WHERE username = ? AND password = ?';
-  connection.query(sql, [username, password], (error, results, fields) => {
-    console.log(username)
+  const sql = 'SELECT * FROM user WHERE username = ? AND password = ? AND (keystroke_per_second BETWEEN ?-2 AND ?+2) AND (average_flight_time BETWEEN ?-50 AND ?+50) AND (average_dwell_time BETWEEN ?-20 AND ?+20)';
+  connection.query(sql, [data.username, data.password, data.kps, data.kps, data.avgflight, data.avgflight, data.avgdwell, data.avgdwell], (error, results, fields) => {
+    console.log(data.username)
     if (error) {
       console.error('Failed to execute query:', error);
       res.status(500).json({ message: 'Internal server error.' });
@@ -45,6 +46,28 @@ app.post('/login', (req, res) => {
     } else {
       // send an error response if the user does not exist
       res.status(401).json({ message: 'Invalid username or password.' });
+    }
+  });
+});
+
+// handle POST requests to /login
+app.put('/register', (req, res) => {
+  // get the username and password from the request body
+  const data = req.body;
+  console.log(data)
+
+  // query the database for the user with the given username and password
+  const sql = 'INSERT INTO user (username, password, keystroke_per_second, average_flight_time, average_dwell_time) VALUES (?, ?, ?, ?, ?)';
+  connection.query(sql, [data.username, data.password, data.kps, data.avgflight, data.avgdwell], (error, results, fields) => {
+    console.log(data.username)
+    if (error) {
+      console.error('Failed to execute query:', error);
+      res.status(500).json({ message: 'Internal server error.' });
+      return;
+    }
+    if (results.length === 1) {
+      // send a success response if the user exists
+      res.status(200).json({ message: 'Register successful.' });
     }
   });
 });
