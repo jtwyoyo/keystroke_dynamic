@@ -14,4 +14,7 @@ CREATE TABLE user (
 );
 
 -- insert a user record
-INSERT INTO user (username, password, keystroke_per_second, average_flight_time, average_dwell_time) VALUES ('asdf', 'asdf', 3.8, 250, 96);
+INSERT INTO user (username, password, keystroke_per_second, average_flight_time, average_dwell_time) VALUES ('test', 'test', 3.8, 250, 96);
+
+-- select from user
+SELECT * FROM user;
